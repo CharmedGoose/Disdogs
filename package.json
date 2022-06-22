@@ -7,7 +7,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint .",
 		"build": "tsc -b",
-		"start": "pnpm run build && node ./dist/index.js",
+		"start": "npm run build && node ./dist/index.js",
 		"dev": "node-dev --respawn src/index.ts | pino-pretty -i pid,hostname -t yyyy-mm-dd HH:MM:ss"
 	},
 	"author": "CharmedGoose",
