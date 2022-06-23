@@ -5,11 +5,13 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint .",
 		"build": "tsc -b src",
 		"start": "pm2-runtime start ecosystem.config.js --env production",
 		"dev": "node-dev --respawn src/index.ts | pino-pretty -i pid,hostname -t yyyy-mm-dd HH:MM:ss",
-		"heroku-postbuild": "npm install pm2"
+		"update": "yarn upgrade-interactive",
+		"lint": "eslint --fix --ext ts src",
+		"format": "prettier --write --loglevel=warn \"{src,tests}/**/*.{js,ts,json}\"",
+		"heroku-postbuild": "yarn add pm2"
 	},
 	"author": "CharmedGoose",
 	"license": "MIT",
@@ -26,7 +28,7 @@
 	"devDependencies": {
 		"@sapphire/eslint-config": "^4.3.7",
 		"@sapphire/prettier-config": "^1.4.3",
-		"@swc/core": "^1.2.203",
+		"@swc/core": "^1.2.204",
 		"@swc/helpers": "^0.4.2",
 		"@types/node": "^18.0.0",
 		"eslint": "^8.17.0",
@@ -42,5 +44,5 @@
 	"engines": {
 		"node": "18.3.0"
 	},
-	"packageManager": "pnpm@7.2.1"
+	"packageManager": "yarn@3.2.1"
 }
