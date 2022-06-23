@@ -1402,6 +1402,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"discord-api-types@npm:^0.34.0":
+  version: 0.34.0
+  resolution: "discord-api-types@npm:0.34.0"
+  checksum: 16ef4a7e82c442808447d2062adb907c050f1c0b10b0dd7ffd459b5cbc2ae8e5ba46d17c645e401500a0263ee661c651d29ab5b41bd2af15a72281d03cba90dc
+  languageName: node
+  linkType: hard
+
 "discord.js@npm:^13.8.0":
   version: 13.8.0
   resolution: "discord.js@npm:13.8.0"
@@ -1430,6 +1437,7 @@ __metadata:
     "@swc/core": ^1.2.204
     "@swc/helpers": ^0.4.2
     "@types/node": ^18.0.0
+    discord-api-types: ^0.34.0
     discord.js: ^13.8.0
     dotenv: ^16.0.1
     eslint: ^8.17.0
