@@ -4,7 +4,7 @@ module.exports = {
 			name: 'Disdogs',
 			script: './dist/index.js',
 			watch: '.',
-			instances: 'max',
+			instances: 1,
 			env: {
 				NODE_ENV: 'development'
 			},
