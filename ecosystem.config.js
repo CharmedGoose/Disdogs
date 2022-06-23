@@ -2,7 +2,7 @@ module.exports = {
 	apps: [
 		{
 			name: 'Disdogs',
-			script: './src/index.ts',
+			script: './dist/index.js',
 			watch: '.',
 			instances: 'max',
 			env: {
