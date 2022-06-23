@@ -7,21 +7,25 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint .",
 		"build": "tsc -b",
-		"start": "npm run build && node ./dist/index.js",
-		"dev": "node-dev --respawn src/index.ts | pino-pretty -i pid,hostname -t yyyy-mm-dd HH:MM:ss"
+		"start": "pm2-runtime start ecosystem.config.js --env production",
+		"dev": "node-dev --respawn src/index.ts | pino-pretty -i pid,hostname -t yyyy-mm-dd HH:MM:ss",
+		"heroku-postbuild": "npm install pm2"
 	},
 	"author": "CharmedGoose",
 	"license": "MIT",
 	"dependencies": {
 		"@sapphire/framework": "^2.5.1",
+		"@sapphire/ts-config": "^3.3.4",
 		"discord.js": "^13.8.0",
 		"dotenv": "^16.0.1",
 		"mongoose": "^6.3.8",
 		"pino": "7.0.0-rc.9",
-		"typescript": "^4.7.3",
-		"@sapphire/ts-config": "^3.3.4"
+		"pm2": "^5.2.0",
+		"typescript": "^4.7.3"
 	},
 	"devDependencies": {
+		"@sapphire/eslint-config": "^4.3.7",
+		"@sapphire/prettier-config": "^1.4.3",
 		"@swc/core": "^1.2.203",
 		"@swc/helpers": "^0.4.2",
 		"@types/node": "^18.0.0",
@@ -29,8 +33,6 @@
 		"node-dev": "^7.4.3",
 		"prettier": "^2.7.1",
 		"regenerator-runtime": "^0.13.9",
-		"@sapphire/prettier-config": "^1.4.3",
-		"@sapphire/eslint-config": "^4.3.7",
 		"ts-node": "^10.8.1"
 	},
 	"prettier": "@sapphire/prettier-config",
