@@ -45,7 +45,7 @@
 		"extends": "@sapphire"
 	},
 	"engines": {
-		"node": "18.3.0"
+		"node": "16.3.0"
 	},
 	"packageManager": "yarn@3.2.1"
 }
