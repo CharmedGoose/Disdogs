@@ -2,6 +2,8 @@ import { Command } from '@sapphire/framework';
 import Canvas from 'canvas';
 import petSchema from '../models/petSchema';
 import { Message, MessageAttachment } from 'discord.js';
+import Range from '../lib/RangeStats';
+
 
 export class PutsToSleepCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
@@ -51,5 +53,6 @@ export class PutsToSleepCommand extends Command {
 			await petSchema.findOneAndDelete({ ownerId: message.author.id });
 			return;
 		}
+		await Range(message);
 	}
 }

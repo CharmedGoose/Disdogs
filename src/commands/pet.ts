@@ -1,6 +1,7 @@
 import { Command } from '@sapphire/framework';
 import { Message, MessageEmbed } from 'discord.js';
 import petSchema from '../models/petSchema';
+import Range from '../lib/RangeStats';
 
 const BarTypes = {
 	empty: '<:Bar_Empty:988491887415533668>',
@@ -39,6 +40,7 @@ export class StartCommand extends Command {
 			await message.reply({ embeds: [embed] });
 			return;
 		}
+		await Range(message);
 		embed.title = `${(await this.container.client.users.fetch(pet.ownerId)).username}'s ${pet.name}` || 'Doge <:doge:988485797667819520>';
 
 		embed.addField('Happiness', `${getBar(Math.round((pet.happiness || 0) / 25))} (${Math.round(pet.happiness || 0)}%)`, true);

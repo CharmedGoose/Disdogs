@@ -2,6 +2,7 @@ import { Command } from '@sapphire/framework';
 import { Message, MessageActionRow, MessageButton } from 'discord.js';
 import type { MessageComponentInteraction } from 'discord.js';
 import petSchema from '../models/petSchema';
+import Range from '../lib/RangeStats';
 export class WashCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options, name: 'wash', aliases: [], description: 'Wash Your Dog' });
@@ -36,6 +37,7 @@ export class WashCommand extends Command {
 			} else if (btn.customId === 'play_stop') {
 				await btn.reply('Minigame Failed\nIt Drowned');
 			}
+			await Range(message);
 		});
 	}
 }

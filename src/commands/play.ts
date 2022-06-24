@@ -2,6 +2,7 @@ import { Command } from '@sapphire/framework';
 import { Message, MessageActionRow, MessageButton } from 'discord.js';
 import type { MessageComponentInteraction } from 'discord.js';
 import petSchema from '../models/petSchema';
+import Range from '../lib/RangeStats';
 export class PlayCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options, name: 'play', aliases: [], description: 'Play With Your Dog' });
@@ -50,6 +51,7 @@ export class PlayCommand extends Command {
 					}
 				);
 			}
+			await Range(message);
 		});
 	}
 }

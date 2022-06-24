@@ -2,6 +2,7 @@ import { Command } from '@sapphire/framework';
 import { Message, MessageActionRow, MessageButton } from 'discord.js';
 import type { MessageComponentInteraction } from 'discord.js';
 import petSchema from '../models/petSchema';
+import Range from '../lib/RangeStats';
 export class FeedCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options, name: 'feed', aliases: [], description: 'Feed Your Dog' });
@@ -66,6 +67,7 @@ export class FeedCommand extends Command {
 			} else if (btn.customId.startsWith('play_')) {
 				await btn.reply('Minigame Failed\nYou Missed');
 			}
+			await Range(message);
 		});
 	}
 }
