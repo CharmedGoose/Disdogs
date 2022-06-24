@@ -41,32 +41,56 @@ export class ReadyListener extends Listener {
 			if (!pet) return;
 			const embed = new MessageEmbed({
 				title: `Congratulations ${message.author.username}!`,
-				description: `Your ${pet.name} Is Now Level ${(pet.level || 0) + 1}!`,
+				description: `${pet.name} Is Now Level ${(pet.level || 0) + 1}!`,
 				color: 'RANDOM'
 			});
 			await message.channel.send({ embeds: [embed] });
 		}
 		if ((pet.fullness || 0) <= 0) {
-			pet.fullness = 0;
-			pet.level = (pet.level || 0) / 2;
-			pet.love = (pet.love || 0) - 50;
-			await pet.save();
+			await petSchema.findOneAndDelete({ ownerId: message.author.id });
+			const embed = new MessageEmbed({
+				title: `Bad News`,
+				description: `<@${message.author.id}> Your ${pet.name} Died Because You Didn't Feed It`,
+				color: 'RED'
+			});
+			await message.channel.send({ embeds: [embed] });
 		}
 		if ((pet.energy || 0) < 0) {
-			pet.energy = 0;
-			await pet.save();
+			await petSchema.findOneAndDelete({ ownerId: message.author.id });
+			const embed = new MessageEmbed({
+				title: `Bad News`,
+				description: `<@${message.author.id}> Your ${pet.name} Died Because It Didn't Get Sleep`,
+				color: 'RED'
+			});
+			await message.channel.send({ embeds: [embed] });
 		}
 		if ((pet.hygiene || 0) < 0) {
-			pet.hygiene = 0;
-			await pet.save();
+			await petSchema.findOneAndDelete({ ownerId: message.author.id });
+			const embed = new MessageEmbed({
+				title: `Bad News`,
+				description: `<@${message.author.id}> ${pet.name} Was Taken Away By The Animal Shelter Because You Didn't Wash It`,
+				color: 'RED'
+			});
+			await message.channel.send({ embeds: [embed] });
 		}
 		if ((pet.happiness || 0) < 0) {
-			pet.happiness = 0;
-			await pet.save();
+			await petSchema.findOneAndDelete({ ownerId: message.author.id });
+			const embed = new MessageEmbed({
+				title: `Bad News`,
+				description: `<@${message.author.id}> Your ${pet.name} Died Because Of Depression`,
+				color: 'RED'
+			});
+			await message.channel.send({ embeds: [embed] });
 		}
 		if ((pet.love || 0) < 0) {
-			pet.love = 0;
-			await pet.save();
+			await petSchema.findOneAndDelete({ ownerId: message.author.id });
+			const embed = new MessageEmbed({
+				title: `Bad News`,
+				description: `<@${message.author.id}> Your ${pet.name} Ranaway Because You Didn't Love It`,
+				color: 'RED'
+			});
+			await message.channel.send({ embeds: [embed] });
+			
 		}
 		if ((pet.fullness || 0) > 100) {
 			pet.fullness = 100;

@@ -34,7 +34,7 @@ export class FeedCommand extends Command {
 			clearInterval(loop);
 			await msg.edit({ components: [] });
 			if (btn.customId === 'play_left' && random === 1) {
-				await btn.reply('You Win!');
+				await btn.reply('You Fed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: message.author.id },
 					{
@@ -44,7 +44,7 @@ export class FeedCommand extends Command {
 					}
 				);
 			} else if (btn.customId === 'play_middle' && random === 2) {
-				await btn.reply('You Win!');
+				await btn.reply('You Fed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: message.author.id },
 					{
@@ -54,7 +54,7 @@ export class FeedCommand extends Command {
 					}
 				);
 			} else if (btn.customId === 'play_right' && random === 3) {
-				await btn.reply('You Win!');
+				await btn.reply('You Fed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: message.author.id },
 					{
@@ -64,7 +64,7 @@ export class FeedCommand extends Command {
 					}
 				);
 			} else if (btn.customId.startsWith('play_')) {
-				await btn.reply('Minigame Failed');
+				await btn.reply('Minigame Failed\nYou Missed');
 			}
 		});
 	}

@@ -24,7 +24,7 @@ export class WashCommand extends Command {
 			clearInterval(loop);
 			await msg.edit({ components: [] });
 			if (btn.customId === 'play_stop' && amount === 4) {
-				await btn.reply('You Win!');
+				await btn.reply('You Washed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: message.author.id },
 					{
@@ -34,7 +34,7 @@ export class WashCommand extends Command {
 					}
 				);
 			} else if (btn.customId === 'play_stop') {
-				await btn.reply('Minigame Failed');
+				await btn.reply('Minigame Failed\nIt Drowned');
 			}
 		});
 	}

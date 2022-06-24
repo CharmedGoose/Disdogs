@@ -34,13 +34,13 @@ export class PlayCommand extends Command {
 			await msg.edit({ components: [] });
 			clearInterval(loop);
 			if (btn.customId === 'play_left' && random === 1) {
-				await btn.reply('Minigame Failed');
+				await btn.reply('Minigame Failed\nYou Missed');
 			} else if (btn.customId === 'play_middle' && random === 2) {
-				await btn.reply('Minigame Failed');
+				await btn.reply('Minigame Failed\nYou Missed');
 			} else if (btn.customId === 'play_right' && random === 3) {
-				await btn.reply('Minigame Failed');
+				await btn.reply('Minigame Failed\nYou Missed');
 			} else if (btn.customId.startsWith('play_')) {
-				await btn.reply('You Win!');
+				await btn.reply('You Played With Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: message.author.id },
 					{
