@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+ disdogs:
+  build:
+   context: .
+  environment:
+   - MONGO_SRV=mongodb://mongo:27017/disdogs
+  volumes:
+   - ./:/app
+  command: yarn start
+
+ mongo:
+  image: mongo:4.2.8
+  ports:
+   - 27017:27017
+  volumes:
+   - mongodb:/data/db
+   - mongodb_config:/data/configdb
+volumes:
+ mongodb:
+ mongodb_config:

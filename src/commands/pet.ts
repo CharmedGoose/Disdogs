@@ -30,6 +30,7 @@ export class StartCommand extends Command {
 	}
 
 	public async messageRun(message: Message) {
+		await Range(message);
 		const pet = await petSchema.findOne({ ownerId: message.author.id });
 		const embed = new MessageEmbed({
 			color: 'RANDOM'
@@ -40,7 +41,6 @@ export class StartCommand extends Command {
 			await message.reply({ embeds: [embed] });
 			return;
 		}
-		await Range(message);
 		embed.title = `${(await this.container.client.users.fetch(pet.ownerId)).username}'s ${pet.name}` || 'Doge <:doge:988485797667819520>';
 
 		embed.addField('Happiness', `${getBar(Math.round((pet.happiness || 0) / 25))} (${Math.round(pet.happiness || 0)}%)`, true);

@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "tsc -b src",
-		"start": "yarn build && node ./dist/index.js",
+		"start": "node --enable-source-maps dist/index.js",
 		"dev": "nodemon -e ts --watch src .env --exec \"tsc -b src --incremental && node ./dist/index.js\" | pino-pretty -i pid,hostname -t yyyy-mm-dd HH:MM:ss",
 		"update": "yarn upgrade-interactive",
 		"lint": "eslint --fix --ext ts src",
