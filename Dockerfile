@@ -31,7 +31,6 @@ FROM base AS runner
 ENV NODE_ENV="production"
 ENV NODE_OPTIONS="--enable-source-maps --max_old_space_size=4096"
 
-COPY --chown=node:node .env .env
 COPY --chown=node:node --from=builder /usr/src/app/dist dist
 
 RUN yarn workspaces focus --all --production
