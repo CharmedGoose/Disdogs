@@ -1,14 +1,19 @@
-import { Command } from '@sapphire/framework';
+import { ChatInputCommand, Command } from '@sapphire/framework';
 import petSchema from '../models/petSchema';
-import type { Message } from 'discord.js';
 
 export class PutToSleepCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options, name: 'puttosleep', aliases: [], description: 'Puts Your Dog To Sleep' });
 	}
+	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
+		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(false), {
+			guildIds: ['984461250673143889', '973906266277683210'],
+			idHints: ['991781591212892170', '991781592026591254']
+		});
+	}
 
-    public async messageRun(message: Message) {
-    const pet = await petSchema.findOneAndDelete({ ownerId: message.author.id });
-	message.channel.send(`BANG\nBANG\nBANG\nYou Put Your ${pet?.name || "Dog"} To Sleep`)
+	public async chatInputRun(interaction: Command.ChatInputInteraction) {
+		const pet = await petSchema.findOneAndDelete({ ownerId: interaction.user.id });
+		interaction.reply(`BANG\nBANG\nBANG\nYou Put Your ${pet?.name || 'Dog'} To Sleep`);
 	}
 }

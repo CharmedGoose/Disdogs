@@ -7,11 +7,8 @@ import logger from './logger';
 
 const client = new SapphireClient({
 	intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'],
-	caseInsensitiveCommands: true,
-	caseInsensitivePrefixes: true,
-	defaultPrefix: process.env.PREFIX,
 	presence: { activities: [{ name: 'With Dogs', type: 'PLAYING' }], afk: false, status: 'online' },
-	typing: true
+	loadMessageCommandListeners: true
 });
 
 mongoose

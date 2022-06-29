@@ -1,5 +1,5 @@
-import { Command } from '@sapphire/framework';
-import { Message, MessageActionRow, MessageButton } from 'discord.js';
+import { ChatInputCommand, Command } from '@sapphire/framework';
+import { MessageActionRow, MessageButton } from 'discord.js';
 import type { MessageComponentInteraction } from 'discord.js';
 import petSchema from '../models/petSchema';
 import Range from '../lib/RangeStats';
@@ -7,32 +7,43 @@ export class PlayCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options, name: 'play', aliases: [], description: 'Play With Your Dog' });
 	}
+	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
+		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(false), {
+			guildIds: ['984461250673143889', '973906266277683210'],
+			idHints: ['991781678085320755', '991781678848679978']
+		});
+	}
 
-	public async messageRun(message: Message) {
+	public async chatInputRun(interaction: Command.ChatInputInteraction) {
 		const playRow = new MessageActionRow().addComponents(
 			new MessageButton().setCustomId('play_left').setLabel('Left').setStyle('PRIMARY'),
 			new MessageButton().setCustomId('play_middle').setLabel('Middle').setStyle('PRIMARY'),
 			new MessageButton().setCustomId('play_right').setLabel('Right').setStyle('PRIMARY')
 		);
-		const msg = await message.channel.send({ content: ':herb::herb::herb:\n     :dog:     \n\n     :softball:', components: [playRow] });
+		await interaction.reply({ content: ':herb::herb::herb:\n     :dog:     \n\n     :softball:', components: [playRow] });
 		let random = 2;
 		const loop = setInterval(async () => {
 			random = Math.round(Math.random() * 2) + 1;
 			if (random === 1) {
-				await msg.edit({ content: ':herb::herb::herb:\n:dog:          \n\n     :softball:', components: [playRow] });
+				await interaction.editReply({ content: ':herb::herb::herb:\n:dog:          \n\n     :softball:', components: [playRow] });
 			} else if (random === 2) {
-				await msg.edit({ content: ':herb::herb::herb:\n     :dog:     \n\n     :softball:', components: [playRow] });
+				await interaction.editReply({ content: ':herb::herb::herb:\n     :dog:     \n\n     :softball:', components: [playRow] });
 			} else if (random === 3) {
-				await msg.edit({ content: ':herb::herb::herb:\n**           **:dog:\n\n     :softball:', components: [playRow] });
+				await interaction.editReply({ content: ':herb::herb::herb:\n**           **:dog:\n\n     :softball:', components: [playRow] });
 			}
 		}, 1000);
 
-		const filter = (btni: MessageComponentInteraction) => btni.user.id === message.author.id;
+		const filter = (btni: MessageComponentInteraction) => btni.user.id === interaction.user.id;
 
-		const collector = message.channel.createMessageComponentCollector({ filter, max: 1 });
+		const collector = interaction.channel?.createMessageComponentCollector({ filter, max: 1 });
+
+		if (!collector) {
+			interaction.followUp('ERR\nNot A Channel');
+			return;
+		}
 
 		collector.on('collect', async (btn: MessageComponentInteraction) => {
-			await msg.edit({ components: [] });
+			await interaction.editReply({ components: [] });
 			clearInterval(loop);
 			if (btn.customId === 'play_left' && random === 1) {
 				await btn.reply('Minigame Failed\nYou Missed');
@@ -43,7 +54,7 @@ export class PlayCommand extends Command {
 			} else if (btn.customId.startsWith('play_')) {
 				await btn.reply('You Played With Your Dog');
 				await petSchema.findOneAndUpdate(
-					{ ownerId: message.author.id },
+					{ ownerId: interaction.user.id },
 					{
 						$inc: {
 							happiness: 15
@@ -51,7 +62,7 @@ export class PlayCommand extends Command {
 					}
 				);
 			}
-			await Range(message);
+			await Range.InteractionRange(interaction);
 		});
 	}
 }

@@ -1,5 +1,5 @@
-import { Command } from '@sapphire/framework';
-import type { Message } from 'discord.js';
+import { ChatInputCommand, Command } from '@sapphire/framework';
+import { isMessageInstance } from '@sapphire/discord.js-utilities';
 
 export class PingCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
@@ -7,14 +7,22 @@ export class PingCommand extends Command {
 			...options,
 			name: 'ping',
 			aliases: ['pong'],
-			description: 'ping pong'
+			description: 'Ping'
 		});
 	}
-	public async messageRun(message: Message) {
-		const msg = await message.channel.send('Pong!');
-		const content = `Pong! Bot Latency ${Math.round(this.container.client.ws.ping)}ms. API Latency ${
-			msg.createdTimestamp - message.createdTimestamp
-		}ms.`;
-		return msg.edit(content);
+	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
+		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(true), {
+			guildIds: ['984461250673143889', '973906266277683210'],
+			idHints: ['991756077962121306', '991755645646807171']
+		});
+	}
+	public async chatInputRun(interaction: Command.ChatInputInteraction) {
+		const msg = await interaction.reply({ content: `Pong`, fetchReply: true });
+		if (isMessageInstance(msg)) {
+			const diff = msg.createdTimestamp - interaction.createdTimestamp;
+			const ping = Math.round(this.container.client.ws.ping);
+			return interaction.editReply(`Pong 🏓! (Round trip took: ${diff}ms. Heartbeat: ${ping}ms.)`);
+		}
+		return interaction.editReply('Failed to retrieve ping :(');
 	}
 }

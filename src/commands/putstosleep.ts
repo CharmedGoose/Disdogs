@@ -1,16 +1,23 @@
-import { Command } from '@sapphire/framework';
+import { ChatInputCommand, Command } from '@sapphire/framework';
 import Canvas from 'canvas';
 import petSchema from '../models/petSchema';
 import { Message, MessageAttachment } from 'discord.js';
 import Range from '../lib/RangeStats';
-
 
 export class PutsToSleepCommand extends Command {
 	public constructor(context: Command.Context, options: Command.Options) {
 		super(context, { ...options, name: 'putstosleep', aliases: [], description: 'Puts Your Dog To Sleep' });
 	}
 
-	public async messageRun(message: Message) {
+	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
+		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(false), {
+			guildIds: ['984461250673143889', '973906266277683210'],
+			idHints: ['991781593427476591', '991781594492842094']
+		});
+	}
+
+	public async chatInputRun(interaction: Command.ChatInputInteraction) {
+		await interaction.deferReply();
 		const canvas = Canvas.createCanvas(750, 750);
 		const context = canvas.getContext('2d');
 		const background = await Canvas.loadImage('./assets/farm.jpg');
@@ -27,20 +34,26 @@ export class PutsToSleepCommand extends Command {
 
 		const attachment = new MessageAttachment(canvas.toBuffer(), 'count-sheep.png');
 
-		await message.channel.send({ files: [attachment], content: 'Count The Sheep' });
+		await interaction.editReply({ files: [attachment], content: 'Count The Sheep' });
 
-		const filter = (m: Message) => m.author.id === message.author.id;
+		const filter = (m: Message) => m.author.id === interaction.user.id;
 		let collected;
 		try {
-			collected = await message.channel.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] });
+			collected = await interaction.channel?.awaitMessages({ filter, max: 1, time: 30e3, errors: ['time'] });
 		} catch (e) {
-			message.channel.send('Minigame Failed\nTime Ran Out');
+			interaction.followUp('Minigame Failed\nTime Ran Out');
 			return;
 		}
+
+		if (!collected) {
+			interaction.followUp('Minigame Failed\nTime Ran Out');
+			return;
+		}
+
 		if (Number(collected.first()?.content || '1') === random) {
-			message.channel.send('Your Dog Went To Sleep');
+			interaction.followUp('Your Dog Went To Sleep');
 			await petSchema.findOneAndUpdate(
-				{ ownerId: message.author.id },
+				{ ownerId: interaction.user.id },
 				{
 					$inc: {
 						energy: 100
@@ -49,10 +62,10 @@ export class PutsToSleepCommand extends Command {
 			);
 			return;
 		} else {
-			message.channel.send("Minigame Failed\nYour Dog Ranaway From You Because You Couldn't Count");
-			await petSchema.findOneAndDelete({ ownerId: message.author.id });
+			interaction.followUp("Minigame Failed\nYour Dog Ranaway From You Because You Couldn't Count");
+			await petSchema.findOneAndDelete({ ownerId: interaction.user.id });
 			return;
 		}
-		await Range(message);
+		await Range.InteractionRange(interaction);
 	}
 }

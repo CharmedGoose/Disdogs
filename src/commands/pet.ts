@@ -1,5 +1,5 @@
-import { Command } from '@sapphire/framework';
-import { Message, MessageEmbed } from 'discord.js';
+import { ChatInputCommand, Command } from '@sapphire/framework';
+import { MessageEmbed } from 'discord.js';
 import petSchema from '../models/petSchema';
 import Range from '../lib/RangeStats';
 
@@ -29,16 +29,24 @@ export class StartCommand extends Command {
 		super(context, { ...options, name: 'pet', aliases: [], description: 'Shows Your Dog' });
 	}
 
-	public async messageRun(message: Message) {
-		await Range(message);
-		const pet = await petSchema.findOne({ ownerId: message.author.id });
+	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
+		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(false), {
+			guildIds: ['984461250673143889', '973906266277683210'],
+			idHints: ['991781601476354198', '991781602214551592']
+		});
+	}
+
+	public async chatInputRun(interaction: Command.ChatInputInteraction) {
+		await interaction.deferReply();
+		await Range.InteractionRange(interaction);
+		const pet = await petSchema.findOne({ ownerId: interaction.user.id });
 		const embed = new MessageEmbed({
 			color: 'RANDOM'
 		});
 		if (!pet) {
 			embed.title = 'ERROR';
-			embed.description = 'You Have No Dog. Type `d!start` To Get A Dog :dog:';
-			await message.reply({ embeds: [embed] });
+			embed.description = 'You Have No Dog. Type `/start` To Get A Dog :dog:';
+			await interaction.editReply({ embeds: [embed] });
 			return;
 		}
 		embed.title = `${(await this.container.client.users.fetch(pet.ownerId)).username}'s ${pet.name}` || 'Doge <:doge:988485797667819520>';
@@ -58,6 +66,6 @@ export class StartCommand extends Command {
 			iconURL: (await this.container.client.users.fetch(pet.ownerId)).avatarURL() || undefined
 		});
 
-		await message.channel.send({ embeds: [embed] });
+		await interaction.editReply({ embeds: [embed] });
 	}
 }

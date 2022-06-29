@@ -47,9 +47,9 @@ export class ReadyListener extends Listener {
 			});
 			await message.channel.send({ embeds: [embed] });
 		}
-		await Range(message);
+		await Range.Range(message);
 		if (message.content === '<@987346532166684753>') {
-			message.reply(`My prefix is \`${process.env.PREFIX}\``)
+			message.reply(`My prefix is \`${process.env.PREFIX}\``);
 		}
 	}
 }
