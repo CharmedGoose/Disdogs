@@ -57,7 +57,8 @@ export class PlayCommand extends Command {
 					{ ownerId: interaction.user.id },
 					{
 						$inc: {
-							happiness: 15
+							happiness: 15,
+							loyalty: 2
 						}
 					}
 				);

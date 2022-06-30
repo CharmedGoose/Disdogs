@@ -113,6 +113,15 @@ async function InteractionRange(interaction: Command.ChatInputInteraction) {
 		});
 		await interaction.channel?.send({ embeds: [embed] });
 	}
+	if ((pet.loyalty || 0) < 0) {
+		await petSchema.findOneAndDelete({ ownerId: interaction.user.id });
+		const embed = new MessageEmbed({
+			title: `Bad News`,
+			description: `<@${interaction.user.id}> Your ${pet.name} Ranaway Because It Wasn't Loyal To You`,
+			color: 'RED'
+		});
+		await interaction.channel?.send({ embeds: [embed] });
+	}
 	if ((pet.love || 0) < 0) {
 		await petSchema.findOneAndDelete({ ownerId: interaction.user.id });
 		const embed = new MessageEmbed({

@@ -18,7 +18,8 @@ export class ReadyListener extends Listener {
 					fullness: -Math.round(Math.random()),
 					hygiene: -Math.round(Math.random()),
 					energy: -Math.floor(Math.random() * 3),
-					happiness: -1
+					happiness: -1,
+					loyalty: -1
 				}
 			}
 		);
@@ -48,8 +49,8 @@ export class ReadyListener extends Listener {
 			await message.channel.send({ embeds: [embed] });
 		}
 		await Range.Range(message);
-		if (message.content === '<@987346532166684753>') {
-			message.reply(`My prefix is \`${process.env.PREFIX}\``);
+		if (message.mentions.users.has('987346532166684753')) {
+			message.reply(`My prefix is \`/\``);
 		}
 	}
 }

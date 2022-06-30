@@ -14,6 +14,6 @@ export class PutToSleepCommand extends Command {
 
 	public async chatInputRun(interaction: Command.ChatInputInteraction) {
 		const pet = await petSchema.findOneAndDelete({ ownerId: interaction.user.id });
-		interaction.reply(`BANG\nBANG\nBANG\nYou Put Your ${pet?.name || 'Dog'} To Sleep`);
+		interaction.reply(`BANG\nBANG\nBANG\nYou Put ${pet?.name || 'Your Dog'} To Sleep`);
 	}
 }

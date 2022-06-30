@@ -8,6 +8,7 @@ interface IPet {
 	hygiene?: number;
 	love?: number;
 	energy?: number;
+	loyalty?: number;
 	experience?: number;
 	level?: number;
 }
@@ -21,6 +22,7 @@ const petSchema = new mongoose.Schema<IPet>({
 	love: { type: Number, default: 10 },
 	energy: { type: Number, default: 100 },
 	experience: { type: Number, default: 0 },
+	loyalty: { type: Number, default: 25 },
 	level: { type: Number, default: 0 }
 });
 

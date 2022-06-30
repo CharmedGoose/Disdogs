@@ -43,7 +43,8 @@ export class WashCommand extends Command {
 					{ ownerId: interaction.user.id },
 					{
 						$inc: {
-							hygiene: 15
+							hygiene: 15,
+							loyalty: 2
 						}
 					}
 				);
