@@ -21,6 +21,7 @@ export class FeedCommand extends Command {
 			new MessageButton().setCustomId('play_right').setLabel('Right').setStyle('PRIMARY')
 		);
 		await interaction.reply({ content: ':window::window::window:\n     :dog:     \n\n     :bone:', components: [playRow] });
+		await interaction.followUp('Game: Feed\nHow To Play: Click The Button BELOW The Dog');
 		let random = 2;
 		const loop = setInterval(async () => {
 			random = Math.round(Math.random() * 2) + 1;

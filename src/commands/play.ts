@@ -21,6 +21,7 @@ export class PlayCommand extends Command {
 			new MessageButton().setCustomId('play_right').setLabel('Right').setStyle('PRIMARY')
 		);
 		await interaction.reply({ content: ':herb::herb::herb:\n     :dog:     \n\n     :softball:', components: [playRow] });
+		await interaction.followUp('Game: Play\nHow To Play: Click A Button Thats NOT Below The Dog');
 		let random = 2;
 		const loop = setInterval(async () => {
 			random = Math.round(Math.random() * 2) + 1;

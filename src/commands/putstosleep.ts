@@ -35,6 +35,7 @@ export class PutsToSleepCommand extends Command {
 		const attachment = new MessageAttachment(canvas.toBuffer(), 'count-sheep.png');
 
 		await interaction.editReply({ files: [attachment], content: 'Count The Sheep' });
+		await interaction.followUp('Game: Count\nHow To Play: Count The Sheeps Then Type It In The Chat');
 
 		const filter = (m: Message) => m.author.id === interaction.user.id;
 		let collected;
