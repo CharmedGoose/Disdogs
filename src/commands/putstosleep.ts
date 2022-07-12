@@ -52,7 +52,7 @@ export class PutsToSleepCommand extends Command {
 		}
 
 		if (Number(collected.first()?.content || '1') === random) {
-			interaction.followUp('Your Dog Went To Sleep');
+			interaction.editReply('Your Dog Went To Sleep');
 			await petSchema.findOneAndUpdate(
 				{ ownerId: interaction.user.id },
 				{
@@ -61,11 +61,9 @@ export class PutsToSleepCommand extends Command {
 					}
 				}
 			);
-			return;
 		} else {
-			interaction.followUp("Minigame Failed\nYour Dog Ranaway From You Because You Couldn't Count");
+			interaction.editReply("Minigame Failed\nYour Dog Ranaway From You Because You Couldn't Count");
 			await petSchema.findOneAndDelete({ ownerId: interaction.user.id });
-			return;
 		}
 		await Range.InteractionRange(interaction);
 	}
