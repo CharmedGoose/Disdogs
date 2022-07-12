@@ -47,7 +47,7 @@ export class WashCommand extends Command {
 			clearInterval(loop);
 			await interaction.editReply({ components: [] });
 			if (btn.customId === 'play_stop' && amount === 5) {
-				await btn.editReply('You Washed Your Dog');
+				await btn.reply('You Washed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: interaction.user.id },
 					{
@@ -58,7 +58,7 @@ export class WashCommand extends Command {
 					}
 				);
 			} else if (btn.customId === 'play_stop' || amount > 5) {
-				await btn.editReply('Minigame Failed\nIt Drowned');
+				await btn.reply('Minigame Failed\nIt Drowned');
 			}
 			await Range.InteractionRange(interaction);
 		});

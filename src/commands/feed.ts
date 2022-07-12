@@ -47,7 +47,7 @@ export class FeedCommand extends Command {
 			clearInterval(loop);
 			await interaction.editReply({ components: [] });
 			if (btn.customId === 'play_left' && random === 1) {
-				await btn.editReply('You Fed Your Dog');
+				await btn.reply('You Fed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: interaction.user.id },
 					{
@@ -57,7 +57,7 @@ export class FeedCommand extends Command {
 					}
 				);
 			} else if (btn.customId === 'play_middle' && random === 2) {
-				await btn.editReply('You Fed Your Dog');
+				await btn.reply('You Fed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: interaction.user.id },
 					{
@@ -67,7 +67,7 @@ export class FeedCommand extends Command {
 					}
 				);
 			} else if (btn.customId === 'play_right' && random === 3) {
-				await btn.editReply('You Fed Your Dog');
+				await btn.reply('You Fed Your Dog');
 				await petSchema.findOneAndUpdate(
 					{ ownerId: interaction.user.id },
 					{
@@ -77,7 +77,7 @@ export class FeedCommand extends Command {
 					}
 				);
 			} else if (btn.customId.startsWith('play_')) {
-				await btn.editReply('Minigame Failed\nYou Missed');
+				await btn.reply('Minigame Failed\nYou Missed');
 			}
 			await Range.InteractionRange(interaction);
 		});
