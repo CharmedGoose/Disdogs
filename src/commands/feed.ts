@@ -9,7 +9,7 @@ export class FeedCommand extends Command {
 	}
 	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
 		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(false), {
-			guildIds: ['984461250673143889', '973906266277683210'],
+			guildIds: [],
 			idHints: ['991781598682955846', '991781599731535993']
 		});
 	}

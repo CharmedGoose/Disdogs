@@ -14,7 +14,7 @@ export class StartCommand extends Command {
 
 	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
 		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(false), {
-			guildIds: ['984461250673143889', '973906266277683210'],
+			guildIds: [],
 			idHints: ['991755647370674268']
 		});
 	}

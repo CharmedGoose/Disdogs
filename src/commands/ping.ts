@@ -12,7 +12,7 @@ export class PingCommand extends Command {
 	}
 	public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
 		registry.registerChatInputCommand((builder) => builder.setName(this.name).setDescription(this.description).setDMPermission(true), {
-			guildIds: ['984461250673143889', '973906266277683210'],
+			guildIds: [],
 			idHints: ['991756077962121306', '991755645646807171']
 		});
 	}
