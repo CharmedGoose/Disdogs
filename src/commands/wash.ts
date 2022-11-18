@@ -17,7 +17,7 @@ export class WashCommand extends Command {
 
 	public async chatInputRun(interaction: Command.ChatInputInteraction) {
 		const playRow = new MessageActionRow().addComponents(new MessageButton().setCustomId('play_stop').setLabel('Stop').setStyle('PRIMARY'));
-		await interaction.reply({ content: '<:tub:996415255850791034>', components: [playRow] });
+		await interaction.reply({ content: '<:tub:996415255850791034>', components: [playRow]});
 		await interaction.followUp('Game: Wash\nHow To Play: Click Stop When The Bath Tub Is Full');
 		let amount = 1;
 		const loop = setInterval(async () => {
@@ -37,36 +37,30 @@ export class WashCommand extends Command {
 
 		const collector = interaction.channel?.createMessageComponentCollector({ filter, max: 1 });
 
+		
 		if (!collector) {
 			interaction.followUp('ERR\nNot A Channel');
 			return;
 		}
 
-		while (!collector.collected) {
-			if (amount > 5) {
-				clearInterval(loop);
-				await interaction.followUp('Minigame Failed\nIt Drowned');
-				await Range.InteractionRange(interaction);
-				return;
-			}
-		}
-
-		clearInterval(loop);
-		await interaction.editReply({ components: [] });
-		if (amount === 5) {
-			await interaction.followUp('You Washed Your Dog');
-			await petSchema.findOneAndUpdate(
-				{ ownerId: interaction.user.id },
-				{
-					$inc: {
-						hygiene: 15,
-						loyalty: 2
+		collector.on('collect', async (btn: MessageComponentInteraction) => {
+			clearInterval(loop);
+			await interaction.editReply({ components: [] });
+			if (btn.customId === 'play_stop' && amount === 5) {
+				await btn.reply('You Washed Your Dog');
+				await petSchema.findOneAndUpdate(
+					{ ownerId: interaction.user.id },
+					{
+						$inc: {
+							hygiene: 15,
+							loyalty: 2
+						}
 					}
-				}
-			);
-		} else if (amount > 5) {
-			await interaction.followUp('Minigame Failed\nIt Drowned');
-		}
-		await Range.InteractionRange(interaction);
+				);
+			} else if (btn.customId === 'play_stop' || amount > 5) {
+				await btn.reply('Minigame Failed\nIt Drowned');
+			}
+			await Range.InteractionRange(interaction);
+		});
 	}
 }
