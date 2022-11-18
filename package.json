@@ -15,11 +15,11 @@
 	"author": "CharmedGoose",
 	"license": "MIT",
 	"dependencies": {
+		"@napi-rs/canvas": "^0.1.30",
 		"@sapphire/discord.js-utilities": "^4.11.3",
 		"@sapphire/framework": "^3.0.0-next.99b4446.0",
 		"@sapphire/ts-config": "^3.3.4",
 		"@types/node": "^18.0.0",
-		"canvas": "^2.9.3",
 		"discord-api-types": "^0.33.0",
 		"discord.js": "^13.8.1",
 		"dotenv": "^16.0.1",
