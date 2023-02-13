@@ -2517,10 +2517,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:^0.33.0, discord-api-types@npm:^0.33.3":
+"discord-api-types@npm:^0.33.3":
   version: 0.33.5
   resolution: "discord-api-types@npm:0.33.5"
   checksum: 6dcaad640c5693a69c9a4f5e444e739dde11ba835164ae6fd3dd5a1ab7b4d7f96cd022ed653eeaff2c8051ead0d998a5d502a2915cfacdde596364b82d9e3b3f
+  languageName: node
+  linkType: hard
+
+"discord-api-types@npm:^0.37.0":
+  version: 0.37.33
+  resolution: "discord-api-types@npm:0.37.33"
+  checksum: d1e31106081ef79d3ea721b8991c5de155879e6d01c47a025b2c41e0496b551608e72e383caf23680938219099b6c3bd43cbacf48edeb7fc9a3c1730c1811ba8
   languageName: node
   linkType: hard
 
@@ -2554,7 +2561,7 @@ __metadata:
     "@swc/helpers": ^0.4.3
     "@types/node": ^18.0.0
     canvas: ^2.10.2
-    discord-api-types: ^0.33.0
+    discord-api-types: ^0.37.0
     discord.js: ^13.8.1
     dotenv: ^16.0.1
     eslint: ^8.18.0
