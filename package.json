@@ -15,7 +15,7 @@
 	"author": "CharmedGoose",
 	"license": "MIT",
 	"dependencies": {
-		"@sapphire/discord.js-utilities": "^4.11.3",
+		"@sapphire/discord.js-utilities": "^6.0.0",
 		"@sapphire/framework": "^3.0.0-next.99b4446.0",
 		"@sapphire/ts-config": "^3.3.4",
 		"@types/node": "^18.0.0",
